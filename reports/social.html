@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surreal Hair and Beauty — Social Media Performance Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#BB5B33;
+    --terracotta-deep:#8E4224;
+    --terracotta-mid:#C87C55;
+    --terracotta-soft:#DBA684;
+    --terracotta-pale:#EAD0C1;
+    --teal:#2F7D83;
+    --teal-deep:#215A5F;
+    --cream:#F6ECE1;
+    --cream-deep:#EFE2D3;
+    --card:#FFFDFB;
+    --ink:#2B2320;
+    --muted:#6E5F54;
+    --line:#E3D3C2;
+    --good:#3F7D5A;
+    --warn:#B98328;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px 96px}
+  h1,h2,h3{font-family:'Fraunces','Cormorant Garamond',Georgia,serif;font-weight:600;color:var(--terracotta-deep);letter-spacing:-.01em;line-height:1.15}
+  h2{font-size:29px;margin:0 0 6px}
+  h3{font-size:20px;color:var(--ink);margin:0 0 4px;font-weight:600}
+  p{margin:0 0 14px}
+  a{color:var(--terracotta)}
+  .muted{color:var(--muted)}
+  .small{font-size:13.5px}
+
+  header.masthead{
+    background:linear-gradient(180deg,#fff9f4 0%,var(--cream) 100%);
+    border-bottom:1px solid var(--line);
+    padding:46px 0 34px;margin-bottom:14px;
+  }
+  .masthead-inner{max-width:1080px;margin:0 auto;padding:0 28px}
+  .masthead h1{font-size:38px;margin:0 0 8px;color:var(--terracotta-deep)}
+  .masthead .kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:10px}
+  .masthead .sub{color:var(--muted);font-size:15px;margin:0;max-width:80ch}
+
+  section{margin:52px 0 0}
+  .section-tag{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-deep);font-weight:700;background:#e6efef;border-radius:999px;padding:4px 12px;margin-bottom:14px}
+  .lead{font-size:16.5px;color:var(--muted);max-width:78ch;margin-bottom:22px}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:8px 0 6px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;position:relative;overflow:hidden}
+  .stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--terracotta)}
+  .stat .val{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--terracotta-deep);line-height:1}
+  .stat .lab{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.35}
+  .stat .delta{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px}
+  .stat.alt::before{background:var(--teal)}
+  .stat.alt .val{color:var(--teal-deep)}
+  .delta.up{color:#2c6a49;background:#e4f0e8}
+  .delta.down{color:#9a3f2a;background:#f6e2da}
+  .delta.flat{color:var(--muted);background:#eee6dc}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px;box-shadow:0 1px 2px rgba(90,50,25,.04)}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:4px;flex-wrap:wrap}
+  .chart-note{font-size:12.5px;color:var(--muted);margin-top:12px}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:2px 0 16px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+  .chart svg{width:100%;height:auto;display:block;overflow:visible}
+  .bar{transition:opacity .15s}
+  .chart:hover .bar{opacity:.55}
+  .chart .bar:hover{opacity:1}
+  .axis text{fill:var(--muted);font-size:12px;font-family:'Inter',sans-serif}
+  .gridline{stroke:var(--line);stroke-width:1;shape-rendering:crispEdges}
+  .barval{fill:var(--ink);font-size:12.5px;font-weight:600;font-family:'Inter',sans-serif}
+  .barsub{fill:var(--terracotta-deep);font-size:11.5px;font-weight:600;font-family:'Inter',sans-serif}
+
+  .stack{display:flex;height:46px;border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+  .stack .seg{position:relative;min-width:2px}
+  .stack .seg + .seg{box-shadow:-2px 0 0 var(--card)}
+  .stack-legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;margin-top:16px;font-size:13.5px}
+  .stack-legend .row{display:flex;align-items:center;gap:9px;justify-content:space-between;border-bottom:1px dotted var(--line);padding:5px 0}
+  .stack-legend .row .name{display:flex;align-items:center;gap:9px}
+  .stack-legend .row .pct{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  caption{text-align:left;font-size:12.5px;color:var(--muted);padding-bottom:8px}
+  th,td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--teal-deep);font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid var(--line)}
+  tbody tr:hover{background:#faf3ea}
+  tfoot td{font-weight:700;border-top:2px solid var(--line);border-bottom:none}
+
+  .bm-row{display:grid;grid-template-columns:210px 1fr;gap:16px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+  .bm-row:last-child{border-bottom:none}
+  .bm-name{font-size:13.5px;font-weight:600}
+  .bm-name small{display:block;color:var(--muted);font-weight:400;font-size:11.5px}
+  .bm-bars{display:flex;flex-direction:column;gap:7px}
+  .bm-bar{display:flex;align-items:center;gap:10px}
+  .bm-track{flex:1;background:var(--cream-deep);border-radius:6px;height:20px;position:relative;overflow:hidden}
+  .bm-fill{height:100%;border-radius:6px;background:var(--terracotta)}
+  .bm-val{width:74px;text-align:right;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+
+  .callout{background:linear-gradient(180deg,#fff8f2,#fbefe4);border:1px solid var(--terracotta-soft);border-left:5px solid var(--terracotta);border-radius:12px;padding:18px 22px;margin-top:18px}
+  .callout .big{font-family:'Fraunces',serif;font-size:22px;color:var(--terracotta-deep);font-weight:600}
+
+  .note-box{background:#fbf4ec;border:1px dashed var(--line);border-radius:12px;padding:20px 24px;margin-top:6px}
+
+  .rec{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+  .rec h3{color:var(--teal-deep)}
+  .rec .num{font-family:'Fraunces',serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:4px}
+
+  #tt{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;padding:7px 10px;border-radius:8px;opacity:0;transform:translate(-50%,-120%);transition:opacity .1s;z-index:50;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+  #tt b{color:#ffd9c6}
+
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+
+  @media (max-width:920px){
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .grid-2{grid-template-columns:1fr}
+    .stack-legend{grid-template-columns:1fr}
+    .masthead h1{font-size:28px}
+    .bm-row{grid-template-columns:1fr}
+  }
+  @media print{
+    body{background:#fff}
+    .card,.stat,.rec{box-shadow:none}
+    section{break-inside:avoid}
+    header.masthead{background:#fff}
+  }
+</style>
+</head>
+<body>
+<div id="tt"></div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="kicker">Business Builds · Surreal Hair and Beauty · Christchurch</div>
+    <h1>Social Media Performance Report</h1>
+    <p class="sub">Instagram performance for the Surreal Hair and Beauty business account, prepared from the analytics captures supplied in July 2026.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- METHOD NOTE -->
+  <section id="method" style="margin-top:30px">
+  <div class="card">
+    <p style="margin-bottom:10px"><strong>About this report.</strong> The figures below are drawn from the Instagram professional dashboard captures supplied for the Surreal Hair and Beauty business account. They combine calendar-month summaries with rolling ninety-day and thirty-day views, each noted where it appears.</p>
+    <p class="small" style="margin:0">Reporting periods vary because the captures were taken from different views within the dashboard. Figures are presented to the nearest whole number where the source rounded them, and all growth percentages are as reported by Instagram against its own comparison period.</p>
+  </div>
+</section>
+
+  <!-- SECTION 1: MICHELLE -->
+  
+
+  <!-- SECTION 2: SURREAL -->
+  <section id="surreal">
+    <h2>Surreal Hair and Beauty business account</h2>
+    <p class="lead">The Surreal account is smaller and local, and its trajectory over the period is one of consistent monthly improvement. Monthly views rose from 271 in March to around 1,800 by May, held near that level in June, then lifted sharply in the most recent thirty days to 7,200 as the In Business with Michelle Marsh feature was shared. The follower base grew steadily throughout, reaching 350 by 18 July.</p>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="val">350</div><div class="lab">Followers at 18 July</div><span class="delta up">+4.5% in 90 days</span></div>
+      <div class="stat"><div class="val">7.2K</div><div class="lab">Views in the 30 days to 18 July</div><span class="delta up">recent surge</span></div>
+      <div class="stat"><div class="val">336</div><div class="lab">Interactions in the last 90 days</div></div>
+      <div class="stat alt"><div class="val">67.8%</div><div class="lab">Of interactions came from existing followers</div></div>
+    </div>
+
+    <div class="card chart" id="chart-surviews" style="margin-top:24px">
+      <div class="chart-head"><h3>Monthly views, March to June 2026</h3><span class="small muted">Instagram monthly summaries</span></div>
+      <svg id="svg-surviews" viewBox="0 0 900 360" role="img" aria-label="Column chart of Surreal monthly views from March to June 2026"></svg>
+      <p class="chart-note">March to June are the calendar-month summaries. The most recent thirty-day view, 19 June to 18 July, recorded 7,200 views, well above any earlier month, lifted by the In Business feature.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px">
+      <div class="card">
+        <div class="chart-head"><h3>Follower growth</h3><span class="small muted">to 18 July 2026</span></div>
+        <svg id="svg-surfoll" viewBox="0 0 900 320" role="img" aria-label="Line of Surreal follower count from February to July 2026"></svg>
+        <p class="chart-note">The follower count rose from 314 in February to 350 by mid-July. Growth is slow but steady, with 25 new follows and 10 unfollows across the last ninety days.</p>
+      </div>
+      <div class="card">
+        <div class="chart-head"><h3>Interactions by content type</h3><span class="small muted">last 90 days</span></div>
+        <div class="stack" id="stack-surtype"></div>
+        <div class="stack-legend" id="legend-surtype"></div>
+        <p class="chart-note">Posts and reels each carry roughly half of all interactions, while stories contribute very little. There is clear room to make stories work harder.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <table>
+        <caption>Table 2. Surreal Hair and Beauty business account, monthly summary 2026. Non-follower share is the proportion of views from accounts that do not follow the salon.</caption>
+        <thead><tr><th>Month</th><th>Views</th><th>Change on prior month</th><th>Views from non-followers</th><th>Followers at month end</th></tr></thead>
+        <tbody>
+          <tr><td>March</td><td>271</td><td class="muted">—</td><td>87%</td><td>327</td></tr>
+          <tr><td>April</td><td>645</td><td class="pos" style="color:#2c6a49;font-weight:600">+138%</td><td>37%</td><td>337</td></tr>
+          <tr><td>May</td><td>1,800</td><td class="pos" style="color:#2c6a49;font-weight:600">+184%</td><td>50%</td><td>339</td></tr>
+          <tr><td>June</td><td>1,700</td><td class="muted">held steady</td><td>68%</td><td>341</td></tr>
+          <tr><td>30 days to 18 Jul</td><td>7,200</td><td class="pos" style="color:#2c6a49;font-weight:600">strong lift</td><td class="muted">—</td><td>350</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="big">Best times to post: Monday, Tuesday and Wednesday evenings, 6 to 9pm</div>
+      <p class="small muted" style="margin:8px 0 0">This is the window in which Surreal's followers have been most active recently, taken from the account's own audience-activity view. Scheduling the most important posts of the week into these evenings should improve early reach.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: COMPARISON -->
+  
+
+  <!-- SECTION 4: RECOMMENDATIONS -->
+  
+
+  <footer>
+    <p><strong>Surreal Hair and Beauty — Social Media Performance Report.</strong> Prepared by Business Builds. Figures are drawn from Instagram professional dashboard captures supplied in July 2026 and are presented to the nearest whole number where the source rounded them. All growth percentages are as reported by Instagram against its own comparison period.</p>
+    <p>Account attribution inferred from content and should be confirmed. Reporting periods differ between accounts and are stated alongside each figure.</p>
+  </footer>
+
+</div>
+
+<script>
+const tt=document.getElementById('tt');
+function showTT(e,html){tt.innerHTML=html;tt.style.opacity=1;tt.style.left=e.clientX+'px';tt.style.top=e.clientY+'px';}
+function moveTT(e){tt.style.left=e.clientX+'px';tt.style.top=e.clientY+'px';}
+function hideTT(){tt.style.opacity=0;}
+
+/* stacked splits */
+function buildStack(stackId,legendId,rows){
+  const stack=document.getElementById(stackId), leg=document.getElementById(legendId);
+  rows.forEach(r=>{
+    const seg=document.createElement('div');seg.className='seg';
+    seg.style.width=r.pct+'%';seg.style.background=r.color;
+    seg.addEventListener('mouseenter',e=>showTT(e,`<b>${r.name}</b> — ${r.amt} · ${r.pct}%`));
+    seg.addEventListener('mousemove',moveTT);seg.addEventListener('mouseleave',hideTT);
+    stack.appendChild(seg);
+    const row=document.createElement('div');row.className='row';
+    row.innerHTML=`<span class="name"><span class="swatch" style="background:${r.color}"></span>${r.name}</span><span class="pct">${r.amt} · ${r.pct}%</span>`;
+    leg.appendChild(row);
+  });
+}
+buildStack('stack-surtype','legend-surtype',[
+  {name:'Posts',amt:'',pct:52.0,color:'var(--terracotta)'},
+  {name:'Reels',amt:'',pct:46.5,color:'var(--terracotta-mid)'},
+  {name:'Stories',amt:'',pct:1.5,color:'var(--terracotta-pale)'}
+].map(r=>({...r,amt:r.pct+'%'})));
+
+
+/* Surreal monthly views column chart */
+(function(){
+  const data=[
+    {y:'Mar',v:271,g:null},
+    {y:'Apr',v:645,g:'+138%'},
+    {y:'May',v:1800,g:'+184%'},
+    {y:'Jun',v:1700,g:'steady'}
+  ];
+  const svg=document.getElementById('svg-surviews');
+  const W=900,H=360,mL=58,mR=20,mT=34,mB=44;
+  const plotW=W-mL-mR, plotH=H-mT-mB, max=2000;
+  const NS='http://www.w3.org/2000/svg';
+  function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  for(let i=0;i<=4;i++){
+    const val=max/4*i, yy=mT+plotH-(val/max)*plotH;
+    svg.appendChild(el('line',{class:'gridline',x1:mL,y1:yy,x2:W-mR,y2:yy}));
+    const tx=el('text',{class:'axis',x:mL-10,y:yy+4,'text-anchor':'end'});tx.textContent=(val/1000).toFixed(1)+'K';svg.appendChild(tx);
+  }
+  const gap=plotW/data.length, bw=gap*0.5;
+  data.forEach((d,i)=>{
+    const bh=(d.v/max)*plotH, x=mL+gap*i+(gap-bw)/2, y=mT+plotH-bh;
+    const r=el('rect',{class:'bar',x:x,y:y,width:bw,height:bh,rx:5,fill:'var(--terracotta)'});
+    r.addEventListener('mouseenter',e=>showTT(e,`<b>${d.y}</b> — ${d.v.toLocaleString('en-NZ')} views${d.g&&d.g!=='steady'?' · '+d.g:''}`));
+    r.addEventListener('mousemove',moveTT);r.addEventListener('mouseleave',hideTT);
+    svg.appendChild(r);
+    const vt=el('text',{class:'barval',x:x+bw/2,y:y-22,'text-anchor':'middle'});vt.textContent=d.v.toLocaleString('en-NZ');svg.appendChild(vt);
+    if(d.g){const gt=el('text',{class:'barsub',x:x+bw/2,y:y-6,'text-anchor':'middle'});gt.textContent=d.g;svg.appendChild(gt);}
+    const xt=el('text',{class:'axis',x:x+bw/2,y:H-mB+22,'text-anchor':'middle'});xt.textContent=d.y;svg.appendChild(xt);
+  });
+})();
+
+/* Surreal follower line */
+(function(){
+  const data=[
+    {m:'Feb',v:314},{m:'Mar',v:327},{m:'Apr',v:337},{m:'May',v:339},{m:'Jun',v:341},{m:'18 Jul',v:350}
+  ];
+  const svg=document.getElementById('svg-surfoll');
+  const W=900,H=320,mL=48,mR=24,mT=28;
+  const plotW=W-mL-mR, plotH=H-mT-42, min=300,max=360;
+  const NS='http://www.w3.org/2000/svg';
+  function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  for(let i=0;i<=3;i++){
+    const val=min+(max-min)/3*i, yy=mT+plotH-((val-min)/(max-min))*plotH;
+    svg.appendChild(el('line',{class:'gridline',x1:mL,y1:yy,x2:W-mR,y2:yy}));
+    const tx=el('text',{class:'axis',x:mL-10,y:yy+4,'text-anchor':'end'});tx.textContent=Math.round(val);svg.appendChild(tx);
+  }
+  const gap=plotW/(data.length-1);
+  const pts=data.map((d,i)=>({x:mL+gap*i,y:mT+plotH-((d.v-min)/(max-min))*plotH,d}));
+  let dstr=pts.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ');
+  svg.appendChild(el('path',{d:dstr,fill:'none',stroke:'var(--teal)','stroke-width':3,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  pts.forEach(p=>{
+    const cc=el('circle',{cx:p.x,cy:p.y,r:5,fill:'var(--teal)'});
+    cc.addEventListener('mouseenter',e=>showTT(e,`<b>${p.d.m}</b> — ${p.d.v} followers`));
+    cc.addEventListener('mousemove',moveTT);cc.addEventListener('mouseleave',hideTT);
+    svg.appendChild(cc);
+    const vt=el('text',{class:'barval',x:p.x,y:p.y-14,'text-anchor':'middle'});vt.textContent=p.d.v;svg.appendChild(vt);
+    const xt=el('text',{class:'axis',x:p.x,y:H-16,'text-anchor':'middle'});xt.textContent=p.d.m;svg.appendChild(xt);
+  });
+})();
+</script>
+</body>
+</html>
