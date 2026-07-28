@@ -271,39 +271,31 @@
   <section id="profit">
     <span class="section-tag">Growth in Sales Figures · profitability</span>
     <h2>Revenue and cost structure</h2>
-    <p class="lead">Surreal returned a company profit of $339,008 in the recent year, 19.4 per cent of turnover and well above the industry benchmark. This comprises reported net profit together with the shareholder salaries drawn by the owners. Measured before those salaries, net profit is $264,875, or 14.9 per cent of revenue, which still sits at the upper end of the trade's healthy range. The cost structure is shown from two views below.</p>
+    <p class="lead">Surreal returned a company profit of $339,008 in the recent year, 19.4 per cent of turnover and well above the industry benchmark. Alongside the company profit, the owners draw a wage, $79,540 for Michelle and $23,597 for Julian, so the total income the business returned to its owners was $442,145. The cost structure is shown below.</p>
 
     <div class="callout">
       <div class="big">Company profit $339,008 &nbsp;·&nbsp; 19.4% of turnover</div>
-      <p class="small muted" style="margin:8px 0 0">This is net profit of $264,008 together with $75,000 of shareholder salaries drawn by the owners. Before that owner drawing, the net margin is 14.9 per cent, against an industry average of 8 per cent.</p>
+      <p class="small muted" style="margin:8px 0 0">Alongside the company profit, Michelle and Julian draw wages of $79,540 and $23,597, bringing the total income the business returned to its owners to $442,145.</p>
     </div>
 
-    <div class="grid-2" style="margin-top:20px">
-      <div class="card">
-        <div class="chart-head"><h3>Company accounts</h3><span class="small muted">on $1,744,250 turnover</span></div>
-        <div class="stack" id="stack-entry"></div>
-        <div class="stack-legend" id="legend-entry"></div>
-      </div>
-      <div class="card">
-        <div class="chart-head"><h3>My Salon CEO dashboard</h3><span class="small muted">on $1,777,649 revenue</span></div>
-        <div class="stack" id="stack-dash"></div>
-        <div class="stack-legend" id="legend-dash"></div>
-      </div>
+    <div class="card" style="margin-top:20px">
+      <div class="chart-head"><h3>Where each dollar of turnover goes</h3><span class="small muted">on $1,744,250 turnover</span></div>
+      <div class="stack" id="stack-entry"></div>
+      <div class="stack-legend" id="legend-entry"></div>
     </div>
 
     <div class="card" style="margin-top:20px">
       <table>
-        <caption>Table 3. Cost and profit structure, recent year. Percentages are of each view's total revenue.</caption>
-        <thead><tr><th>Line</th><th>Company accounts ($)</th><th>Share</th><th>Dashboard ($)</th><th>Share</th></tr></thead>
+        <caption>Table 3. Cost and profit structure, recent year. Percentages are of total turnover.</caption>
+        <thead><tr><th>Line</th><th>Amount ($)</th><th>Share</th></tr></thead>
         <tbody>
-          <tr><td>Wages and salaries</td><td>$867,437</td><td>49.7%</td><td>$913,210</td><td>51.4%</td></tr>
-          <tr><td>Rent</td><td>$113,287</td><td>6.5%</td><td class="muted">in overheads</td><td class="muted">—</td></tr>
-          <tr><td>Stock / product costs</td><td>$127,392</td><td>7.3%</td><td>$136,661</td><td>7.7%</td></tr>
-          <tr><td>Operating / overheads</td><td>$297,126</td><td>17.0%</td><td>$462,903</td><td>26.0%</td></tr>
-          <tr><td>Marketing and digital</td><td class="muted">in operating</td><td class="muted">—</td><td>$0</td><td>0.0%</td></tr>
-          <tr><td>Profit before tax</td><td>$339,008</td><td>19.4%</td><td>$264,875</td><td>14.9%</td></tr>
+          <tr><td>Wages and salaries</td><td>$867,437</td><td>49.7%</td></tr>
+          <tr><td>Rent</td><td>$113,287</td><td>6.5%</td></tr>
+          <tr><td>Stock / product costs</td><td>$127,392</td><td>7.3%</td></tr>
+          <tr><td>Operating / overheads</td><td>$297,126</td><td>17.0%</td></tr>
+          <tr><td>Profit before tax</td><td>$339,008</td><td>19.4%</td></tr>
         </tbody>
-        <tfoot><tr><td>Total</td><td>$1,744,250</td><td>100%</td><td>$1,777,649</td><td>100%</td></tr></tfoot>
+        <tfoot><tr><td>Total</td><td>$1,744,250</td><td>100%</td></tr></tfoot>
       </table>
     </div>
   </section>
@@ -464,13 +456,6 @@ buildStack('stack-entry','legend-entry',[
   {name:'Rent',amt:'$113,287',pct:6.5,color:'var(--terracotta-pale)'},
   {name:'Profit before tax',amt:'$339,008',pct:19.4,color:'var(--teal)'}
 ]);
-buildStack('stack-dash','legend-dash',[
-  {name:'Staff salaries and bonus',amt:'$913,210',pct:51.4,color:'var(--terracotta)'},
-  {name:'Operating / overheads',amt:'$462,903',pct:26.0,color:'var(--terracotta-mid)'},
-  {name:'Product costs',amt:'$136,661',pct:7.7,color:'var(--terracotta-soft)'},
-  {name:'Marketing and digital',amt:'$0',pct:0.0,color:'var(--terracotta-pale)'},
-  {name:'Net profit before tax',amt:'$264,875',pct:14.9,color:'var(--teal)'}
-]);
 
 /* ---------- Benchmark bars ---------- */
 function buildBM(containerId,rows,unit){
@@ -505,9 +490,9 @@ buildBM('bm-price',[
   const dep=[
     {name:'Beren',rev:144277,sub:'Moved to Picton · 8 years'},
     {name:'Cherise',rev:123865,sub:'Moved to Australia · 10 years'},
-    {name:'Jorelle',rev:110600,sub:'Moved to Australia · 2 years'},
+    {name:'Janelle',rev:110600,sub:'Moved to Australia · 2 years'},
     {name:'Larissa',rev:35879,sub:'Moved to Australia · 2 years'},
-    {name:'Jeony',rev:6290,sub:'Started a family · 4 years'},
+    {name:'Jeany',rev:6290,sub:'Started a family · 4 years'},
     {name:'Caley',rev:952,sub:'Christmas part-time'}
   ];
   const c=document.getElementById('dep-bars');
