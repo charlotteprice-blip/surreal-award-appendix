@@ -304,7 +304,7 @@
   <section id="benchmark">
     <span class="section-tag">Industry benchmark · My Salon CEO dashboard</span>
     <h2>Surreal against the national salon panel</h2>
-    <p class="lead">The Redken My Salon CEO dashboard compares Surreal against a national panel of nineteen salons. Surreal's net profit margin sits well above the panel average and within the healthy range for the trade, and its average service prices are materially higher, consistent with a premium positioning.</p>
+    <p class="lead">The Redken My Salon CEO dashboard compares Surreal against a national panel of nineteen salons. Surreal's profit margin sits well above the panel average, and its average service prices are materially higher, consistent with a premium positioning.</p>
     <div class="legend">
       <span><span class="swatch" style="background:var(--terracotta)"></span> Surreal (2026)</span>
       <span><span class="swatch" style="background:var(--teal)"></span> National panel average (2024)</span>
@@ -319,8 +319,8 @@
         <h3 style="margin-bottom:16px">Average service price, GST exclusive</h3>
         <div id="bm-price"></div>
         <div class="callout" style="margin-top:20px">
-          <div class="big">14.9% net profit vs 8% panel average</div>
-          <p class="small muted" style="margin:8px 0 0">Surreal sits at the upper end of the trade's healthy range of five to fifteen per cent.</p>
+          <div class="big">19.4% profit vs 8% panel average</div>
+          <p class="small muted" style="margin:8px 0 0">Surreal sits above the trade's healthy range of five to fifteen per cent.</p>
         </div>
       </div>
     </div>
@@ -474,11 +474,11 @@ function buildBM(containerId,rows,unit){
   });
 }
 buildBM('bm-pnl',[
-  {name:'Wages',s:51.4,i:46},
-  {name:'Overheads',s:26.0,i:32},
-  {name:'Product costs',s:7.7,i:12},
+  {name:'Wages',s:49.7,i:46},
+  {name:'Overheads',s:23.5,i:32},
+  {name:'Product costs',s:7.3,i:12},
   {name:'Marketing',s:0,i:2},
-  {name:'Net profit',s:14.9,i:8}
+  {name:'Profit',s:19.4,i:8}
 ],'%');
 buildBM('bm-price',[
   {name:'Cut and blow-dry',s:119,i:89},
